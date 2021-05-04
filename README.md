@@ -1,21 +1,27 @@
 # Bdaykata
 
-**TODO: Add description**
-
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `bdaykata` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:bdaykata, "~> 0.1.0"}
-  ]
-end
+## IEX
+Start:
+```
+MIX_ENV="test" iex -S mix
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/bdaykata](https://hexdocs.pm/bdaykata).
+Load test files in iex:
+```
+ExUnit.start()
+c "test/generators_test.exs"
+:proper_check.sample(PbtGenerators.path())
+```
 
+Or can also use :proper_gen and :proper_types
+
+## Tests
+Run:
+```
+mix test
+```
+
+Sometimes, you need to clean propcheck after making a code fix:
+```
+MIX_ENV=test mix propcheck.clean
+```
