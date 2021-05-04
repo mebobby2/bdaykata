@@ -9,8 +9,11 @@ MIX_ENV="test" iex -S mix
 Load test files in iex:
 ```
 ExUnit.start()
-c "test/generators_test.exs"
+c "test/csv_test.exs"
+
+:proper_gen.pick(CsvTest.csv_source())
 :proper_check.sample(PbtGenerators.path())
+:proper_types.term()
 ```
 
 Or can also use :proper_gen and :proper_types
