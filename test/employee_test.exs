@@ -1,8 +1,8 @@
 defmodule EmployeeTest do
   use ExUnit.Case
   use PropCheck
-  alias Bdaykata.Csv
-  alias Bdaykata.Employee
+  alias Bday.Csv
+  alias Bday.Employee
 
   property "check that leading space is fixed" do
     forall map <- raw_employee_map() do

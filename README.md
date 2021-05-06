@@ -1,5 +1,10 @@
 # Bdaykata
 
+## Run
+```
+mix run -e 'Bday.run("db.csv")'
+```
+
 ## IEX
 Start:
 ```

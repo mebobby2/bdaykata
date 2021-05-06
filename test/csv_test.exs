@@ -1,7 +1,7 @@
 defmodule CsvTest do
   use ExUnit.Case
   use PropCheck
-  alias Bdaykata.Csv
+  alias Bday.Csv
 
   property "roundtrip encoding/decoding", [:verbose] do
     forall maps <- csv_source() do

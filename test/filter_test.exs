@@ -1,6 +1,6 @@
 defmodule FilterTest do
   use ExUnit.Case
-  alias Bdaykata.Filter
+  alias Bday.Filter
 
   test "property-style filtering test" do
     years = generate_years_data(2021, 2041)

@@ -1,6 +1,6 @@
-defmodule Bdaykata.Employee do
-  alias Bdaykata.Csv
-  alias Bdaykata.Filter
+defmodule Bday.Employee do
+  alias Bday.Csv
+  alias Bday.Filter
 
   if Mix.env() == :test do
     def adapt_csv_result_shim(map), do: adapt_csv_result(map)
@@ -20,6 +20,8 @@ defmodule Bdaykata.Employee do
 
   @opaque employee() :: %{required(String.t()) => term()}
   @opaque handle() :: {:raw, [employee()]}
+
+  @spec from_csv(String.t()) :: handle()
   def from_csv(string) do
     {:raw,
      for map <- Csv.decode(string) do

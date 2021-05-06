@@ -1,4 +1,4 @@
-defmodule Bdaykata.Filter do
+defmodule Bday.Filter do
   def birthday(people, date = %Date{month: 2, day: 28}) do
     case Date.leap_year?(date) do
       true -> filter_dob(people, 2, 28)
