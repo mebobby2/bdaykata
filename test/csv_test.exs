@@ -11,43 +11,43 @@ defmodule CsvTest do
 
   ## Unit Tests ##
   test "one column CSV files are inherently ambiguous" do
-    assert "\r\n\r\n" == Csv.encode([%{"" => ""}, %{"" => ""}])
-    assert [%{"" => ""}] = Csv.decode("\r\n\r\n")
+    assert "\n\n" == Csv.encode([%{"" => ""}, %{"" => ""}])
+    assert [%{"" => ""}] = Csv.decode("\n\n")
   end
 
 
   test "one record per line" do
     assert [%{"aaa" => "zzz", "bbb" => "yyy", "ccc" => "xxx"}] ==
-    Csv.decode("aaa,bbb,ccc\r\nzzz,yyy,xxx\r\n")
+    Csv.decode("aaa,bbb,ccc\nzzz,yyy,xxx\n")
   end
 
   test "optional trailing CRLF" do
     assert [%{"aaa" => "zzz", "bbb" => "yyy", "ccc" => "xxx"}] ==
-    Csv.decode("aaa,bbb,ccc\r\nzzz,yyy,xxx")
+    Csv.decode("aaa,bbb,ccc\nzzz,yyy,xxx")
   end
 
   test "double quotes" do
     assert [%{"aaa" => "zzz", "bbb" => "yyy", "ccc" => "xxx"}] ==
-    Csv.decode("\"aaa\",\"bbb\",\"ccc\"\r\nzzz,yyy,xxx")
+    Csv.decode("\"aaa\",\"bbb\",\"ccc\"\nzzz,yyy,xxx")
   end
 
   test "escape CRLF" do
-    assert [%{"aaa" => "zzz", "b\r\nbb" => "yyy", "ccc" => "xxx"}] ==
-    Csv.decode("\"aaa\",\"b\r\nbb\",\"ccc\"\r\nzzz,yyy,xxx")
+    assert [%{"aaa" => "zzz", "b\nbb" => "yyy", "ccc" => "xxx"}] ==
+    Csv.decode("\"aaa\",\"b\nbb\",\"ccc\"\nzzz,yyy,xxx")
   end
 
   test "double quote escaping" do
     # Since we decided headers are mandatory, this test adds a line
     # with empty values (CLRF,,) to the example from the RFC.
     assert [%{"aaa" => "", "b\"bb" => "", "ccc" => ""}] ==
-      Csv.decode("\"aaa\",\"b\"\"bb\",\"ccc\"\r\n,,")
+      Csv.decode("\"aaa\",\"b\"\"bb\",\"ccc\"\n,,")
   end
 
   # this counterexample is taken literally from the RFC and # cannot work with the current implementation because maps # do not allow duplicate keys
   test "dupe keys unsupported" do
     csv =
-      "field_name,field_name,field_name\r\n" <>
-        "aaa,bbb,ccc\r\n" <> "zzz,yyy,xxx\r\n"
+      "field_name,field_name,field_name\n" <>
+        "aaa,bbb,ccc\n" <> "zzz,yyy,xxx\n"
 
     [map1, map2] = Csv.decode(csv)
     assert ["field_name"] == Map.keys(map1)
@@ -91,7 +91,7 @@ defmodule CsvTest do
   end
 
   def quotable_text() do
-    let chars <- list(elements('\r\n' ++ textdata())) do
+    let chars <- list(elements('\n' ++ textdata())) do
       to_string(chars)
     end
   end

@@ -5,7 +5,7 @@ defmodule Bday.Csv do
     vals =
       for map <- maps, do: Enum.map_join(Map.values(map), ",", &escape(&1))
 
-    to_string([keys, "\r\n", Enum.join(vals, "\r\n")])
+    to_string([keys, "\n", Enum.join(vals, "\n")])
   end
 
   def decode(""), do: []
@@ -60,7 +60,7 @@ defmodule Bday.Csv do
 
   defp decode_quoted(string), do: decode_quoted(string, "")
   defp decode_quoted(~s|"|, acc), do: {:done, acc, ""}
-  defp decode_quoted(~s|"\r\n| <> rest, acc), do: {:done, acc, rest}
+  defp decode_quoted(~s|"\n| <> rest, acc), do: {:done, acc, rest}
   defp decode_quoted(~s|",| <> rest, acc), do: {:ok, acc, rest}
   defp decode_quoted(~s|""| <> rest, acc) do
     decode_quoted(rest, acc <> ~s|"|)
@@ -71,7 +71,7 @@ defmodule Bday.Csv do
 
   defp decode_unquoted(string), do: decode_unquoted(string, "")
   defp decode_unquoted("", acc), do: {:done, acc, ""}
-  defp decode_unquoted("\r\n" <> rest, acc), do: {:done, acc, rest}
+  defp decode_unquoted("\n" <> rest, acc), do: {:done, acc, rest}
   defp decode_unquoted("," <> rest, acc), do: {:ok, acc, rest}
   defp decode_unquoted(<<char>> <> rest, acc) do
     decode_unquoted(rest, acc <> <<char>>)
