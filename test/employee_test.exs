@@ -10,14 +10,24 @@ defmodule EmployeeTest do
     end
   end
 
+  property "check that the date is formatted right" do
+    forall map <- raw_employee_map() do
+      case Employee.adapt_csv_result_shim(map) do
+        %{"date_of_birth" => %Date{}} -> true
+        _ -> false
+      end
+    end
+  end
+
   defp raw_employee_map() do
     let proplist <- [
-      {"last_name", CsvTest.field()},
-      {"first_name", whitespaced_text()},
-      {"date_of_birth", text_date()},
-      {"email", whitespaced_text()},
-    ]
-    Map.new(proplist)
+          {"last_name", CsvTest.field()},
+          {"first_name", whitespaced_text()},
+          {"date_of_birth", text_date()},
+          {"email", whitespaced_text()}
+        ] do
+      Map.new(proplist)
+    end
   end
 
   defp whitespaced_text() do
@@ -26,14 +36,15 @@ defmodule EmployeeTest do
 
   defp text_date() do
     rawdate = {choose(1990, 2020), choose(1, 12), choose(1, 31)}
+
     date =
       such_that(
         {y, m, d} <- rawdate,
         when: {:error, :invalid_date} != Date.new(y, m, d)
       )
+
     let {y, m, d} <- date do
       IO.chardata_to_string(:io_lib.format(" ~w/~2..0w/~2..0w", [y, m, d]))
     end
   end
-
 end

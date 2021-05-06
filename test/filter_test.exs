@@ -1,8 +1,6 @@
 defmodule FilterTest do
   use ExUnit.Case
 
-  doctest Bdaykata
-
   test "property-style filtering test" do
     years = generate_years_data(2021, 2041)
     people = generate_people_for_year(3)

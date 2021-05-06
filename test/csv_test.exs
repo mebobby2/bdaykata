@@ -2,8 +2,6 @@ defmodule CsvTest do
   use ExUnit.Case
   use PropCheck
 
-  doctest Bdaykata
-
   property "roundtrip encoding/decoding", [:verbose] do
     forall maps <- csv_source() do
       maps == Csv.decode(Csv.encode(maps))
