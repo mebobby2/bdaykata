@@ -1,4 +1,7 @@
-defmodule Employee do
+defmodule Bdaykata.Employee do
+  alias Bdaykata.Csv
+  alias Bdaykata.Filter
+
   if Mix.env() == :test do
     def adapt_csv_result_shim(map), do: adapt_csv_result(map)
   end

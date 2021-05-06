@@ -1,4 +1,4 @@
-defmodule Csv do
+defmodule Bdaykata.Csv do
   def encode([]), do: ""
   def encode(maps) do
     keys = Enum.map_join(Map.keys(hd(maps)), ",", &escape(&1)) #hd returns the head of a list
